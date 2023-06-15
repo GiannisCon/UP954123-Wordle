@@ -1,0 +1,142 @@
+/*i used em for all my element sizes so that it will scale according to the window size*/
+
+body{
+    background-color: rgb(140, 151, 248);
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 1.5em;
+    font-size: clamp(.5rem,2.5vmin,1.5rem);/* this line is used for scaling according to the window size but also gives the font a min and a max value*/
+}
+#title{
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 0%;
+    margin-top:0%;
+    align-self: center;
+    text-decoration: underline;
+}
+
+.key{
+    font-size: inherit;
+    grid-column: span 2; /* each letter box should take the size of 2 olumns worth of space */
+    grid-auto-rows: 3em; /*button height is 3em tall*/
+    gap: 0.5em;
+    justify-content: center; /* this line and the next one align the content and the flex box to the center*/
+    align-items: center;
+    border-radius: .3em; /*this line makes the border of the buttons round*/
+    color: white;
+    background-color: hsl(   /*here i create 3 variables that control the color of every button, the reason i created variables*/ 
+        var(--hue, 200),     /* is because later on i will be able to just modify those variables to change the color of the keys if the letter is in the word or if it isn't*/
+        var(--saturation, 1%),
+        var(--lightness, 51%)
+      );
+    cursor: pointer;   /* this line makes the cursor turn from an arrow to a pointing hand when hovering over the keyboard buttons*/
+}
+
+.key.large{
+    grid-column: span 3; /*the enter and backspace button need to take more space than the other buttons */
+}
+
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(20, minmax(auto, 1.25em)); /* */
+    grid-auto-rows: 3em;
+    gap: .25em;
+    justify-content: center;
+    user-select: none;/* this line doesn't allow the user to select the text within the keyboard*/
+    
+  }
+/*this are the css class that are going to be applied to all the letters that are being pressed(if they are in the word or not or if they are in the correct location)*/
+  .key.completely-wrong {
+    --lightness: 25%;
+  }
+  
+  .key.wrong-location{
+    --hue: 50;
+    --saturation: 50%;
+    --lightness: 45%;
+  }
+  
+  .key.correct {
+    --hue: 115;
+    --saturation: 30%;
+    --lightness: 45%;
+  }
+
+/*my styling for the whole board that contains the guesses of the user*/
+  .board{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(5,4em); /*number of columns  and size per line*/
+    grid-template-rows: repeat(6,4em);    /*number of rows  and size per line*/
+    gap: .3em; /*gap between the tiles*/
+    margin-bottom: 1.5em;
+  }
+
+/*my styling for each individual tile within the board*/
+  .tile{
+    font-size: 2.5em; /*size of text within each tile*/
+    display: flex;  /*these two lines were added in order for the inner text of the tile to be centered*/
+    justify-content: center; /*centers items on the x axis*/
+    align-items: center; /*centers items on the y axis*/
+    text-transform: uppercase; /* this line makes the text within the tiles into uppercase*/
+    color: white; /* text color*/
+    border: 0.06em solid hsl(240, 2%, 23%);
+    font-weight: bold;
+    user-select: none; /* this line doesnt allow the user to select the text within the tiles*/
+  }
+
+  /* this is my tile styling  */
+  .tile[data-state="current-letter"] {
+    border-color: hsl(200, 1%, 35%);
+  }
+  
+  .tile[data-state="not-in-word"] {
+    border: none;
+    background-color: hsl(240, 2%, 25%);
+  }
+  
+  .tile[data-state="wrong-location"] {
+    border: none;
+    background-color: hsl(50, 50%, 45%);
+  }
+  
+  .tile[data-state="correct-location"] {
+    border: none;
+    background-color: hsl(115, 30%, 45%);
+  }
+
+  .alert-border{
+      position: fixed;  /*this means that the The element is removed from the normal document flow, and no space is created for the element in the page layout. It is positioned relative to the initial containing block established by the viewport, */
+      top: 10vh; /*sets the position of the alert box at the top on the y axis*/
+      left: 50vw; /*sets the position of the alert box center on the x axis*/
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .alert-message{
+      pointer-events: none;/*make sure that the user cannot interact with the message*/
+      background-color: azure;
+      padding: .65em;
+      border-radius: .3em;
+      opacity: 1;
+      transition: opacity 300ms ease-in-out;
+      margin-bottom: 1em;
+  }
+
+  .alert-message.hide{ /*going to use this styling to make the alert message and the box disappear*/
+      opacity: 0;
+  }
+
+    
+
+    
+
+
+
